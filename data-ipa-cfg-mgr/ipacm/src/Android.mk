@@ -1,3 +1,9 @@
+BOARD_PLATFORM_LIST := msm8916
+BOARD_PLATFORM_LIST += msm8909
+ifneq ($(call is-board-platform-in-list,$(BOARD_PLATFORM_LIST)),true)
+ifneq (,$(filter $(QCOM_BOARD_PLATFORMS),$(TARGET_BOARD_PLATFORM)))
+ifneq (, $(filter aarch64 arm arm64, $(TARGET_ARCH)))
+
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
@@ -10,7 +16,6 @@ LOCAL_C_INCLUDES += external/icu/icu4c/source/common
 else
 LOCAL_C_INCLUDES += external/icu4c/common
 endif
-LOCAL_C_INCLUDES += external/dhcpcd
 LOCAL_C_INCLUDES += external/libxml2/include
 LOCAL_C_INCLUDES += external/libnetfilter_conntrack/include
 LOCAL_C_INCLUDES += external/libnfnetlink/include
@@ -87,3 +92,7 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := $(LOCAL_MODULE)
 LOCAL_MODULE_OWNER := ipacm
 include $(BUILD_PREBUILT)
+
+endif # $(TARGET_ARCH)
+endif
+endif
